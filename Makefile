@@ -10,8 +10,14 @@ boot.o: boot/boot.asm
 icaro.o: src/icaro.c
 	$(CC) $(CFLAGS) -c src/icaro.c -o icaro.o
 
-vmicaro: boot.o icaro.o
-	$(LD) -T linker.ld boot.o icaro.o -o vmicaro
+vmicaro: boot.o icaro.o gdt.o gdt_asm.o
+	$(LD) -T linker.ld boot.o icaro.o gdt.o gdt_asm.o -o vmicaro
+
+gdt.o: system/gdt.c
+	$(CC) $(CFLAGS) -c system/gdt.c -o gdt.o
+
+gdt_asm.o: system/gdt.asm
+	$(ASM) -f elf32 system/gdt.asm -o gdt_asm.o
 
 all: vmicaro
 	mkdir -p isodir/boot/grub
