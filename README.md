@@ -42,8 +42,6 @@ Welcome to the legitimate repository for a kernel designed for a future OS.
 
 
 
-> I'm open to new fixes and tips.
-
 
 
 
