@@ -1,4 +1,4 @@
-;Kernel-Ícaro (vmicaro)
+; Kernel-Ícaro (vmicaro)
 ; Copyright (c) 2026 Ícaro Teles da Silva (@icarotelesdasilva)
 ; Este código é parte do projeto Kernel-Ícaro.
 ; Licenciado sob a licença GPL v3.
