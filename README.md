@@ -38,7 +38,10 @@ Welcome to the legitimate repository for a kernel designed for a future OS.
 *Have the compilers installed; they are:*
 
 1- nasm gcc.
+
+
 2- A virtual machine like QEMU or VirtualBox.
+
 
 These are the requirements I recommend.
 
