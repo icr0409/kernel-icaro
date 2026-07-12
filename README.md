@@ -6,6 +6,8 @@ Welcome to the legitimate repository for a kernel designed for a future OS.
 
 > It means that you have found yourself with a repository that is increasingly advanced, like some things added for now in this 1.0 version.
 
+
+
 # Version 1.0 Features
  *What was added?*
  
@@ -15,6 +17,10 @@ Welcome to the legitimate repository for a kernel designed for a future OS.
  
  *in addition to more organized files and new syntaxes.*
 
+
+ 
+ 
+ 
  # KERNEL COMPILATION TUTORIAL
 
  1-  Type ```Make Clean``` to clean up the files
@@ -26,6 +32,9 @@ Welcome to the legitimate repository for a kernel designed for a future OS.
 
  
  Current version 1.0.
+
+
+
 
 ## License
 This project is protected under the **GNU General Public License v3 (GPLv3)**. 
