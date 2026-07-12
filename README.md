@@ -21,4 +21,8 @@ Welcome to the legitimate repository for a kernel designed for a future OS.
  
  Current version 1.0.
 
+## License
+This project is protected under the **GNU General Public License v3 (GPLv3)**. 
+See the [LICENSE](LICENSE) file for more details.
+
  
