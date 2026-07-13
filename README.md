@@ -1,6 +1,6 @@
 # kernel documentation 1.0 
 
-Welcome to kernel-icarus (temporary name) a project that is being made to facilitate users.
+Welcome to kernel-icaro (temporary name) a project that is being made to facilitate users.
 
 ```What does this mean? ```
 
