@@ -53,14 +53,14 @@ if (gdt_init() !=0) {
 
 vga_print("Kernel Panic!");
 vga_print("\nUnable to load gdt.");
-
+while(1);
 }
 
 
 if (inicializar_filtro() !=0) {
 vga_print("Kernel Panic!");  
 vga_print("\nUnable to load inicializar_filtro."); 
-
+while(1);
 }
 
 
@@ -69,7 +69,7 @@ if (limpar_memoria() !=0) {
 
 vga_print("Kernel Panic!");    
 vga_print("\nUnable to load limpar_memoria."); 
-
+while(1);
 }
 
 if (limpar_memoria() !=0) {
@@ -77,10 +77,10 @@ if (limpar_memoria() !=0) {
 
 vga_print("Kernel Panic!");    
 vga_print("\nUnable to load alocar_memoria.");
- 
+while(1);
 }
 
-vga_print("\nHello, Kernel!");
+vga_print("Hello, Kernel!");
 
 
 
