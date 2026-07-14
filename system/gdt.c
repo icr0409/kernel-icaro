@@ -10,7 +10,7 @@
  */
 
 
-extern void gdt_flush(unsigned int);
+int  gdt_flush(unsigned int);
 
 struct gdt_entry {
     unsigned short limite_baixo;
@@ -29,7 +29,7 @@ struct gdtr {
 struct gdt_entry gdt[3];
 struct gdtr gdtr;
 
-void gdt_init()
+int  gdt_init()
 {
     gdt[0].limite_baixo  = 0x0000;
     gdt[0].base_baixa    = 0x0000;
@@ -56,4 +56,6 @@ void gdt_init()
     gdtr.base    = (unsigned int)&gdt;
 
     gdt_flush((unsigned int)&gdtr);
+
+return -1;
 }

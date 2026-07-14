@@ -28,7 +28,7 @@ break;
 }
 }
 
-void limpar_memoria() {
+int  limpar_memoria() {
 
 for (int i = 0; i < 5; i++) {
 
@@ -42,15 +42,45 @@ break;
 }
 }
 
-void criar_filtro();
-void inicializar_filtro();
+int criar_filtro();
+int inicializar_filtro();
 
 
 
 void kmain(void)  {
-gdt_init();
-inicializar_filtro();
-vga_print("Hello, Kernel!");
+
+if (gdt_init() !=0) {
+
+vga_print("Kernel Panic!");
+vga_print("\nUnable to load gdt.");
+
+}
+
+
+if (inicializar_filtro() !=0) {
+vga_print("Kernel Panic!");  
+vga_print("\nUnable to load inicializar_filtro."); 
+
+}
+
+
+
+if (limpar_memoria() !=0) {
+
+vga_print("Kernel Panic!");    
+vga_print("\nUnable to load limpar_memoria."); 
+
+}
+
+if (limpar_memoria() !=0) {
+
+
+vga_print("Kernel Panic!");    
+vga_print("\nUnable to load alocar_memoria.");
+ 
+}
+
+vga_print("\nHello, Kernel!");
 
 
 
@@ -59,3 +89,4 @@ while(1) {
 
 }
 }
+

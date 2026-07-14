@@ -15,6 +15,6 @@
 #ifndef GDT_H
 #define GDT_H
 
-void gdt_init();
+int  gdt_init();
 
 #endif

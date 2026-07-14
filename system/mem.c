@@ -28,7 +28,7 @@ ZonaMemoria filtro_memoria[5];
 
 extern uint32_t _fim_do_kernel;
 
-void inicializar_filtro() {
+int  inicializar_filtro() {
     
     filtro_memoria[0].endereco_inicial = 0x00000000; 
     filtro_memoria[0].endereco_final   = 0x000FFFFF; 
@@ -38,6 +38,8 @@ void inicializar_filtro() {
     filtro_memoria[1].endereco_final   = (uint32_t)&_fim_do_kernel; 
     
     filtro_memoria[1].tipo             = ZONA_KERNEL;   
+return 0;
+
 }
 
 TipoZona verificar_endereco(uint32_t endereco_para_testar) {
