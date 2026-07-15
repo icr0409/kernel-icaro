@@ -8,9 +8,9 @@
 # maintaining this copyright and authorship notice.
 
 
-ASM    = nasm
-CC     = gcc
-LD     = ld -m elf_i386
+ASM     = nasm
+CC      = gcc
+LD      = ld -m elf_i386
 CONVERT = convert
 
 CFLAGS = -m32 -ffreestanding -nostdlib -fno-pic
@@ -21,14 +21,20 @@ boot.o: boot/boot.asm
 kernel.o: src/kernel.c
 	$(CC) $(CFLAGS) -c src/kernel.c -o kernel.o
 
-vmicaro: boot.o kernel.o gdt.o gdt_asm.o mem.o pmm.o
-	$(LD) -T linker.ld boot.o kernel.o gdt.o gdt_asm.o mem.o pmm.o -o vmicaro
+vmicaro: boot.o kernel.o gdt.o gdt_asm.o idt.o idt_asm.o mem.o pmm.o  
+	$(LD) -T linker.ld boot.o kernel.o gdt.o gdt_asm.o idt.o idt_asm.o mem.o pmm.o -o vmicaro
 
 gdt.o: GDT/gdt.c
 	$(CC) $(CFLAGS) -c GDT/gdt.c -o gdt.o
 
 gdt_asm.o: GDT/gdt.asm
 	$(ASM) -f elf32 GDT/gdt.asm -o gdt_asm.o
+
+idt.o: IDT/idt.c
+	$(CC) $(CFLAGS) -c IDT/idt.c -o idt.o
+
+idt_asm.o: IDT/idt.asm
+	$(ASM) -f elf32 IDT/idt.asm -o idt_asm.o
 
 mem.o: memory/mem.c
 	$(CC) $(CFLAGS) -c memory/mem.c -o mem.o

@@ -8,6 +8,7 @@
 #include "drivers/vga.c"
 #include "../GDT/gdt.h" 
 #include "../memory/pmm.h"
+#include "../IDT/idt.h" 
 
 int inicializar_filtro();
 int limpar_memoria();
@@ -84,6 +85,12 @@ while(1);
         while(1);
     }
 
+if (inicializar_idt() != 0) {
+vga_print("Kernel Panic!"); 
+vga_print("\nUnable to load inicializar_idt.");
+while(1);
+
+}
 
 vga_print("Hello, Kernel!");
 
