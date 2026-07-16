@@ -1,0 +1,21 @@
+- name: Instala QEMU
+        run: sudo apt-get install -y qemu-system-x86
+
+      - name: Testa boot no QEMU (headless)
+        run: |
+          timeout 15 qemu-system-i386 \
+            -cdrom vmicaro.iso \
+            -m 32 \
+            -serial stdio \
+            -display none \
+            -no-reboot \
+            > boot_output.log 2>&1 || true
+
+          cat boot_output.log
+
+          if grep -q "boot completo" boot_output.log; then
+            echo " Kernel bootou e reportou sucesso"
+          else
+            echo " Kernel não reportou boot bem-sucedido"
+            exit 1
+          fi
