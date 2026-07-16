@@ -8,12 +8,13 @@
 # maintaining this copyright and authorship notice.
 
 
+
 ASM     = nasm
 CC      = gcc
 LD      = ld -m elf_i386
 CONVERT = convert
 
-CFLAGS = -m32 -ffreestanding -nostdlib -fno-pic
+CFLAGS = -m32 -ffreestanding -nostdlib -fno-pic -Isrc/drivers/keyboard -IPIC -IGDT -IIDT -Imemory
 
 boot.o: boot/boot.asm
 	$(ASM) -f elf32 boot/boot.asm -o boot.o
@@ -21,8 +22,8 @@ boot.o: boot/boot.asm
 kernel.o: src/kernel.c
 	$(CC) $(CFLAGS) -c src/kernel.c -o kernel.o
 
-vmicaro: boot.o kernel.o gdt.o gdt_asm.o idt.o idt_asm.o mem.o pmm.o pic_asm.o pic.o     
-	$(LD) -T linker.ld boot.o kernel.o gdt.o gdt_asm.o idt.o idt_asm.o mem.o pmm.o pic_asm.o pic.o -o vmicaro
+vmicaro: boot.o kernel.o gdt.o gdt_asm.o idt.o idt_asm.o mem.o pmm.o pic_asm.o pic.o keyboard_asm.o keyboard.o
+	$(LD) -T linker.ld boot.o kernel.o gdt.o gdt_asm.o idt.o idt_asm.o mem.o pmm.o pic_asm.o pic.o keyboard_asm.o keyboard.o -o vmicaro
 
 gdt.o: GDT/gdt.c
 	$(CC) $(CFLAGS) -c GDT/gdt.c -o gdt.o
@@ -43,17 +44,22 @@ pmm.o: memory/pmm.c
 	$(CC) $(CFLAGS) -c memory/pmm.c -o pmm.o
 
 pic.o: PIC/pic.c
-	$(CC) $(CFLAGS) -c PIC/pic.c -o pic.o 
+	$(CC) $(CFLAGS) -c PIC/pic.c -o pic.o  
 
-pic_asm.o: PIC/pic.asm 
+pic_asm.o: PIC/pic.asm  
 	$(ASM) -f elf32 PIC/pic.asm -o pic_asm.o
+
+keyboard.o: src/drivers/keyboard/keyboard.c
+	$(CC) $(CFLAGS) -c src/drivers/keyboard/keyboard.c -o keyboard.o
+
+keyboard_asm.o: src/drivers/keyboard/keyboard.asm
+	$(ASM) -f elf32 src/drivers/keyboard/keyboard.asm -o keyboard_asm.o
 
 all: vmicaro
 	mkdir -p isodir/boot/grub
 	cp vmicaro isodir/boot/vmicaro
 	cp boot/grub/grub.cfg isodir/boot/grub/grub.cfg
 	grub-mkrescue -o vmicaro.iso isodir/
-
 
 clean:
 	rm -f *.o vmicaro vmicaro.iso

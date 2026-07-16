@@ -4,12 +4,14 @@
  * Copyright (c) 2026 Ícaro Teles da Silva (@icarotelesdasilva)
  */
 
-
+extern void vga_print(char* str); 
 #include "drivers/vga.c"
 #include "../GDT/gdt.h" 
 #include "../memory/pmm.h"
 #include "../IDT/idt.h" 
 #include "../PIC/pic.h"
+#include "keyboard.h"
+extern void keyboard_handler(void); 
 extern void irq0_handler(void);
 int inicializar_filtro();
 int limpar_memoria();
@@ -93,6 +95,7 @@ while(1);
 
 }
 
+definir_porta_idt(33, (uint32_t)keyboard_handler, 0x08, 0x8E);
 
 vga_print("Hello, Kernel!");
 
