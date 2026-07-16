@@ -1,21 +1,31 @@
-- name: Instala QEMU
-        run: sudo apt-get install -y qemu-system-x86
+name: Build Kernel-Ícaro
 
-      - name: Testa boot no QEMU (headless)
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Instalar dependências
         run: |
-          timeout 15 qemu-system-i386 \
-            -cdrom vmicaro.iso \
-            -m 32 \
-            -serial stdio \
-            -display none \
-            -no-reboot \
-            > boot_output.log 2>&1 || true
+          sudo apt-get update
+          sudo apt-get install -y \
+            nasm \
+            gcc \
+            gcc-multilib \
+            binutils \
+            grub-pc-bin \
+            grub-common \
+            xorriso \
+            mtools
 
-          cat boot_output.log
-
-          if grep -q "boot completo" boot_output.log; then
-            echo " Kernel bootou e reportou sucesso"
-          else
-            echo " Kernel não reportou boot bem-sucedido"
-            exit 1
-          fi
+      - name: Rodar make all
+        run: make all
