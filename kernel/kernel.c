@@ -5,10 +5,10 @@
  */
 
 extern void vga_print(char* str); 
-#include "drivers/vga.c"
-#include "../GDT/gdt.h" 
-#include "../memory/pmm.h"
-#include "../IDT/idt.h" 
+#include "gdt.h"  
+#include "idt.h" 
+#include "pmm.h"
+extern void print_vga(const char* text);
 int inicializar_filtro();
 int limpar_memoria();
 

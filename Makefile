@@ -1,54 +1,44 @@
 # Kernel-Ícaro (vmicaro)
 # Copyright (c) 2026 Ícaro Teles da Silva (@icarotelesdasilva)
-# 
-# This code is part of the Kernel-Ícaro project.
-# Licensed under the GPL v3 License.
-# 
-# Copying, modification, or redistribution is prohibited without
-# maintaining this copyright and authorship notice.
-
-
 
 ASM     = nasm
 CC      = gcc
 LD      = ld -m elf_i386
 CONVERT = convert
 
-CFLAGS = -m32 -ffreestanding -nostdlib -fno-pic -Isrc/drivers/keyboard -IPIC -IGDT -IIDT -Imemory
+CFLAGS = -m32 -ffreestanding -nostdlib -fno-pic -Iinclude
 
-boot.o: boot/boot.asm
-	$(ASM) -f elf32 boot/boot.asm -o boot.o
+OBJ = arch/i386/boot.o \
+      arch/i386/gdt_asm.o \
+      arch/i386/gdt.o \
+      arch/i386/idt_asm.o \
+      arch/i386/idt.o \
+      arch/i386/mem.o \
+      arch/i386/pmm.o \
+      drivers/vga.o \
+      kernel/kernel.o
 
-kernel.o: src/kernel.c
-	$(CC) $(CFLAGS) -c src/kernel.c -o kernel.o
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
-vmicaro: boot.o kernel.o gdt.o gdt_asm.o idt.o idt_asm.o mem.o pmm.o 
-	$(LD) -T linker.ld boot.o kernel.o gdt.o gdt_asm.o idt.o idt_asm.o mem.o pmm.o -o vmicaro
+arch/i386/boot.o: arch/i386/boot.asm
+	$(ASM) -f elf32 arch/i386/boot.asm -o arch/i386/boot.o
 
-gdt.o: GDT/gdt.c
-	$(CC) $(CFLAGS) -c GDT/gdt.c -o gdt.o
+arch/i386/gdt_asm.o: arch/i386/gdt.asm
+	$(ASM) -f elf32 arch/i386/gdt.asm -o arch/i386/gdt_asm.o
 
-gdt_asm.o: GDT/gdt.asm
-	$(ASM) -f elf32 GDT/gdt.asm -o gdt_asm.o
+arch/i386/idt_asm.o: arch/i386/idt.asm
+	$(ASM) -f elf32 arch/i386/idt.asm -o arch/i386/idt_asm.o
 
-idt.o: IDT/idt.c
-	$(CC) $(CFLAGS) -c IDT/idt.c -o idt.o
-
-idt_asm.o: IDT/idt.asm
-	$(ASM) -f elf32 IDT/idt.asm -o idt_asm.o
-
-mem.o: memory/mem.c
-	$(CC) $(CFLAGS) -c memory/mem.c -o mem.o
-
-pmm.o: memory/pmm.c
-	$(CC) $(CFLAGS) -c memory/pmm.c -o pmm.o
+vmicaro: $(OBJ)
+	$(LD) -T arch/i386/linker.ld $(OBJ) -o vmicaro
 
 all: vmicaro
 	mkdir -p isodir/boot/grub
 	cp vmicaro isodir/boot/vmicaro
-	cp boot/grub/grub.cfg isodir/boot/grub/grub.cfg
+	cp grub/grub.cfg isodir/boot/grub/grub.cfg
 	grub-mkrescue -o vmicaro.iso isodir/
 
 clean:
-	rm -f *.o vmicaro vmicaro.iso
+	rm -f $(OBJ) vmicaro vmicaro.iso
 	rm -rf isodir/
