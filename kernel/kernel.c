@@ -22,9 +22,6 @@ void kmain(void) {
     }
 
 
-conferir_memoria();
-
-
     vga_print("Hello, Kernel!");
 
     while (1);
