@@ -2,12 +2,12 @@
  * Kernel-Ícaro (vmicaro)
  * Copyright (c) 2026 Ícaro Teles da Silva (@icarotelesdasilva)
  *
- * Licensed under the GPL v3 License.
+ * Licensed under the MIT License.
  */
 
 #include "gdt.h"   
 #include "idt.h"   
-
+#include "pmm.h"
 extern void vga_print(const char* str);  
 
 void kmain(void) {
@@ -20,6 +20,8 @@ void kmain(void) {
         vga_print("Kernel Panic!\nUnable to load IDT.");
         while(1);
     }
+
+conferir_memoria();
 
 
     vga_print("Hello, Kernel!");
