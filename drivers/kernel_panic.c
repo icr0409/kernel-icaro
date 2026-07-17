@@ -3,18 +3,17 @@
  * Copyright (c) 2026 Ícaro Teles da Silva (@icarotelesdasilva)
  */
 
+extern char *vga;
+extern int coluna;
+extern int linha;
 
-
-char *vga  = (char*)0xB8000;
-int coluna = 0;
-int linha  = 0;
-
-void vga_print(char *str) {
-
+void kernel_panic(char *str) {
     int i = 0;
 
-    while(str[i] != '\0') {
+    coluna = 0;
+    linha++; 
 
+    while(str[i] != '\0') {
         if(str[i] == '\n') {
             coluna = 0;
             linha++;
@@ -22,7 +21,7 @@ void vga_print(char *str) {
         else {
             int pos = (linha * 80 + coluna) * 2;
             vga[pos]   = str[i];
-            vga[pos+1] = 0x03;
+            vga[pos+1] = 0x4F; 
             coluna++;
         }
 
@@ -30,7 +29,10 @@ void vga_print(char *str) {
             coluna = 0;
             linha++;
         }
-
         i++;
+    }
+
+    while(1) {
+        __asm__("hlt"); 
     }
 }

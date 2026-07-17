@@ -8,18 +8,19 @@
 #include "gdt.h"   
 #include "idt.h"   
 #include "pmm.h"
+extern void kernel_panic(char *str);
 extern void vga_print(const char* str);  
-
 void kmain(void) {
     if (gdt_init() != 0) {
-        vga_print("Kernel Panic!\nUnable to load GDT.");
+        kernel_panic("Kernel Panic!\nUnable to load GDT.");
         while(1);
     }
 
     if (inicializar_idt() != 0) {
-        vga_print("Kernel Panic!\nUnable to load IDT.");
+        kernel_panic("Kernel Panic!\nUnable to load IDT.");
         while(1);
     }
+
 
 conferir_memoria();
 
