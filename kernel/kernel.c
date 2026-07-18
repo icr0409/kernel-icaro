@@ -6,7 +6,8 @@
  */
 
 #include "gdt.h"   
-#include "idt.h"   
+#include "idt.h"
+extern void pic_init(void);   
 extern void pmm_init(void);
 extern void* pmm_alloc_page(void);
 extern void kernel_panic(char *str);
@@ -23,7 +24,7 @@ void kmain(void) {
     }
 pmm_init();
 void* pagina_teste = pmm_alloc_page();
-
+pic_init();
     vga_print("Hello, Kernel!");
 
     while (1);

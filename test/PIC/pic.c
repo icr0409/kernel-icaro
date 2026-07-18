@@ -1,41 +1,16 @@
-#include "pic.h"
+#include <stdint.h>
 
-extern void vga_print(const char* srt);
+void outb("uint16_t port, uint8_t val) {
+asm volatile ("outb %0, %1") : : "a"(val), "Nd"(port));
+outb(0x20, 0x11);
+outb(0xA0, 0x11);
+outb(0x21, 0x20);
+outb(0xA1, 0x28);
 
-int timer_ticks = 0;
-
-void pic_remap(int offset1, int offset2) {
-unsigned char m1, m2;
-
-m1= inb (PIC1_DATA);
-m2 = inb(PIC2_DATA);
-
-outb(PIC1_COMMAND, ICW1_INIT | ICW1_ICW4);
-outb(PIC2_COMMAND, ICW1_INIT | ICW1_ICW4);
-
-outb(PIC1_DATA, ICW4_8086);
-outb(PIC2_DATA, m1);
-outb(PIC1_DATA, m2);
+outb(0x21 0x04);
+outb(0xA1, 0x02);
+outb(0x21, 0x01);
+outb(0x21, 0x00);
+outb(0xA1, 0x00);
 
 }
-
-
-void pic_send_eoi(unsigned char irq) {
-if (irq >= 8) {
-
-outb(PIC2_COMMAND, PIC_EOI);
-
-}
-outb(PIC1_COMMAND, PIC_EOI);
-}
-
-void pit_handler_c(void) {
-timer_ticks++;
-if (timer_ticks % 100 == 0) {
-
-vga_print("PING ");
-}
-
-pic_send_eoi(0);
-
-}	
