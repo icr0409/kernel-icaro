@@ -1,5 +1,6 @@
 # Kernel-Ícaro (vmicaro)
 # Copyright (c) 2026 Ícaro Teles da Silva (@icarotelesdasilva)
+.PHONY: all run clean
 
 ASM     = nasm
 CC      = gcc
@@ -43,3 +44,8 @@ all: vmicaro
 clean:
 	rm -f $(OBJ) vmicaro vmicaro.iso
 	rm -rf isodir/
+
+run: vmicaro.iso
+	qemu-system-x86_64 -cdrom vmicaro.iso
+.PHONY: all run clean
+

@@ -1,4 +1,3 @@
-.
 
 ├── arch
 
@@ -16,9 +15,12 @@
 
 │       ├── linker.ld
 
+│       ├── pic.c
+
 │       └── pmm.c
 
 ├── drivers
+
 
 │   ├── kernel_panic.c
 
@@ -34,7 +36,7 @@
 
 │   ├── idt.h
 
-│   └── pmm.h
+│   └── pic.h
 
 ├── kernel
 
@@ -42,27 +44,21 @@
 
 ├── LICENSE
 
-├── Makefile
+├── makefile
+
+├── map.md
 
 ├── README.md
 
 └── test
 
-    ├── keyboard
-
-    │   ├── keyboard.asm
-
-    │   ├── keyboard.c
-
-    │   └── keyboard.h
-
-    └── PIC
-
-        ├── pic.asm
-
-        ├── pic.c
-
-        └── pic.h
+    └── keyboard
+    
+        ├── keyboard.asm
+        
+        ├── keyboard.c
+        
+        └── keyboard.h
 
 
-
+9 directories, 22 files
