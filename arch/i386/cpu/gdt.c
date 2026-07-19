@@ -5,6 +5,7 @@
 
 
 int  gdt_flush(unsigned int);
+ extern void vga_print(const char* str);  
 
 struct gdt_entry {
     unsigned short limite_baixo;
@@ -45,7 +46,7 @@ int  gdt_init()
     gdt[2].acesso        = 0x92;
     gdt[2].granularidade = 0xCF;
     gdt[2].base_alta     = 0x00;
-
+vga_print("\ntabela gdt configurada.");  
     gdtr.tamanho = (sizeof(struct gdt_entry) * 3) - 1;
     gdtr.base    = (unsigned int)&gdt;
 

@@ -25,7 +25,7 @@ void kmain(void) {
 pmm_init();
 void* pagina_teste = pmm_alloc_page();
 pic_init();
-    vga_print("Hello, Kernel!");
+    vga_print("\nHello, Kernel!");
 
     while (1);
 }
