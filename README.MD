@@ -3,7 +3,7 @@
 This project is protected under the **MIT License**. 
 See the [LICENSE](LICENSE) file for more details.
 
-
+[![Build Kernel](https://github.com/icarotelesdasilva/kernel/actions/workflows/build.yml/badge.svg)](https://github.com/icarotelesdasilva/kernel/actions/workflows/build.yml)
 ```
 ├── arch
 
