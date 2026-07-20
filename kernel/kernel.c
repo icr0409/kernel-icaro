@@ -26,6 +26,7 @@ pmm_init();
 void* pagina_teste = pmm_alloc_page();
 pic_init();
     vga_print("\nHello, Kernel!");
+asm("sti");
 
     while (1);
 }
